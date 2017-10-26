@@ -5,16 +5,14 @@ rubymine-remove-prev-archive:
   file.absent:
     - name: '{{ rubymine.tmpdir }}/{{ rubymine.dl.archive_name }}'
     - require_in:
-      - rubymine-install-dir
+      - rubymine-extract-dirs
 
-rubymine-install-dir:
+rubymine-extract-dirs:
   file.directory:
     - names:
-      - '{{ rubymine.alt.realhome }}'
       - '{{ rubymine.tmpdir }}'
 {% if grains.os not in ('MacOS', 'Windows') %}
-      - '{{ rubymine.prefix }}'
-      - '{{ rubymine.symhome }}'
+      - '{{ rubymine.jetbrains.realhome }}'
     - user: root
     - group: root
     - mode: 755
@@ -31,19 +29,6 @@ rubymine-download-archive:
         attempts: {{ rubymine.dl.retries }}
         interval: {{ rubymine.dl.interval }}
       {% endif %}
-
-{% if grains.os not in ('MacOS') %}
-rubymine-unpacked-dir:
-  file.directory:
-    - name: '{{ rubymine.alt.realhome }}'
-    - user: root
-    - group: root
-    - mode: 755
-    - makedirs: True
-    - force: True
-    - onchanges:
-      - cmd: rubymine-download-archive
-{% endif %}
 
 {%- if rubymine.dl.src_hashsum %}
    # Check local archive using hashstring for older Salt / MacOS.
@@ -71,13 +56,14 @@ rubymine-package-install:
     - force: True
     - allow_untrusted: True
 {% else %}
+  # Linux
   archive.extracted:
     - source: 'file://{{ rubymine.tmpdir }}/{{ rubymine.dl.archive_name }}'
-    - name: '{{ rubymine.alt.realhome }}'
+    - name: '{{ rubymine.jetbrains.realhome }}'
     - archive_format: {{ rubymine.dl.archive_type }}
        {% if grains['saltversioninfo'] < [2016, 11, 0] %}
     - tar_options: {{ rubymine.dl.unpack_opts }}
-    - if_missing: '{{ rubymine.alt.realcmd }}'
+    - if_missing: '{{ rubymine.jetbrains.realcmd }}'
        {% else %}
     - options: {{ rubymine.dl.unpack_opts }}
        {% endif %}
@@ -95,36 +81,14 @@ rubymine-package-install:
 
 rubymine-remove-archive:
   file.absent:
-    - names:
-      # todo: maybe just delete the tmpdir itself
-      - '{{ rubymine.tmpdir }}/{{ rubymine.dl.archive_name }}'
-      - '{{ rubymine.tmpdir }}/{{ rubymine.dl.archive_name }}.sha256'
+    - name: '{{ rubymine.tmpdir }}'
     - onchanges:
 {%- if grains.os in ('Windows') %}
       - pkg: rubymine-package-install
 {%- elif grains.os in ('MacOS') %}
       - macpackage: rubymine-package-install
 {% else %}
+      #Unix
       - archive: rubymine-package-install
-
-rubymine-home-symlink:
-  file.symlink:
-    - name: '{{ rubymine.symhome }}'
-    - target: '{{ rubymine.alt.realhome }}'
-    - force: True
-    - onchanges:
-      - archive: rubymine-package-install
-
-# Update system profile with PATH
-rubymine-config:
-  file.managed:
-    - name: /etc/profile.d/rubymine.sh
-    - source: salt://rubymine/files/rubymine.sh
-    - template: jinja
-    - mode: 644
-    - user: root
-    - group: root
-    - context:
-      rubymine_home: '{{ rubymine.symhome }}'
 
 {% endif %}

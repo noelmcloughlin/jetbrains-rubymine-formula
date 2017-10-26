@@ -1,12 +1,13 @@
 rubymine:
-  jetbrains:
-    #Default edition is None (30 day trial)
-    edition: 
   dl:
     retries: 1
     interval: 30
-  alt:
-    priority: 170
+  linux:
+    altpriority: 170
   prefs:
     user: undefined_user
+    #See https://www.jetbrains.com/help/rubymine/Settings_Preferences_Dialog.html
+    jarurl:
+    jardir:
+    jarfile: rubymine-settings.jar
  
