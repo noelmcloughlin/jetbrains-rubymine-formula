@@ -1,6 +1,6 @@
 {% from "rubymine/map.jinja" import rubymine with context %}
 
-{% if grains.os not in ('MacOS', 'Windows') %}
+{% if grains.os not in ('MacOS', 'Windows',) %}
 
 rubymine-home-symlink:
   file.symlink:
@@ -22,7 +22,8 @@ rubymine-config:
       home: '{{ rubymine.jetbrains.home }}/rubymine'
 
   # Debian alternatives
-  {% if grains.os_family not in ('Arch') %}
+  {% if rubymine.linux.altpriority > 0 %}
+     {% if grains.os_family not in ('Arch',) %}
 
 # Add rubymine-home to alternatives system
 rubymine-home-alt-install:
@@ -57,6 +58,7 @@ rubymine-alt-set:
     - onchanges:
       - alternatives: rubymine-alt-install
 
+      {% endif %}
   {% endif %}
 
 {% endif %}

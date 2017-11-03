@@ -25,11 +25,12 @@ rubymine:
     src_hashsum:
 
   linux:
-    altpriority: 170
     symlink: /usr/bin/rubymine
+    #debian alternatives is disabled by default. Activated via pillar value.
+    altpriority: 0
 
   prefs:
-    user: undefined_user
+    user:
     #See https://www.jetbrains.com/help/rubymine/Settings_Preferences_Dialog.html
     jarurl:
     jardir:

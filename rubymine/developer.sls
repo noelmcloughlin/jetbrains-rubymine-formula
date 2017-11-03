@@ -1,6 +1,6 @@
 {% from "rubymine/map.jinja" import rubymine with context %}
 
-{% if rubymine.prefs.user not in (None, 'undfined', 'undefined_user') %}
+{% if rubymine.prefs.user not in (None, 'undefined_user', 'undefined', '',) %}
 
   {% if grains.os == 'MacOS' %}
 rubymine-desktop-shortcut-clean:
@@ -33,7 +33,7 @@ rubymine-desktop-shortcut-add:
     - name: {{ rubymine.homes }}/{{ rubymine.prefs.user }}/Desktop/rubymine{{ rubymine.jetbrains.edition }}.desktop
     - user: {{ rubymine.prefs.user }}
     - makedirs: True
-      {% if salt['grains.get']('os_family') in ('Suse') %} 
+      {% if salt['grains.get']('os_family') in ('Suse',) %} 
     - group: users
       {% else %}
     - group: {{ rubymine.prefs.user }}
@@ -58,9 +58,9 @@ rubymine-prefs-importfile:
     - source: {{ rubymine.prefs.jardir }}/{{ rubymine.prefs.jarfile }}
     - user: {{ rubymine.prefs.user }}
     - makedirs: True
-        {% if grains.os_family in ('Suse') %}
+        {% if grains.os_family in ('Suse',) %}
     - group: users
-        {% elif grains.os not in ('MacOS') %}
+        {% elif grains.os not in ('MacOS',) %}
         #inherit Darwin ownership
     - group: {{ rubymine.prefs.user }}
         {% endif %}
