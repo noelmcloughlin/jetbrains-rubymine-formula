@@ -21,9 +21,8 @@ rubymine-config:
     - context:
       home: '{{ rubymine.jetbrains.home }}/rubymine'
 
-  # Debian alternatives
-  {% if rubymine.linux.altpriority > 0 %}
-     {% if grains.os_family not in ('Arch',) %}
+  # Linux alternatives
+  {% if rubymine.linux.altpriority > 0 and grains.os_family not in ('Arch',) %}
 
 # Add rubymine-home to alternatives system
 rubymine-home-alt-install:
@@ -58,7 +57,6 @@ rubymine-alt-set:
     - onchanges:
       - alternatives: rubymine-alt-install
 
-      {% endif %}
   {% endif %}
 
 {% endif %}
