@@ -1,17 +1,15 @@
 {% from "rubymine/map.jinja" import rubymine with context %}
 
-{% if rubymine.prefs.user not in (None, 'undefined_user', 'undefined', '',) %}
+{% if rubymine.prefs.user %}
 
-  {% if grains.os == 'MacOS' %}
 rubymine-desktop-shortcut-clean:
   file.absent:
     - name: '{{ rubymine.homes }}/{{ rubymine.prefs.user }}/Desktop/RubyMine'
     - require_in:
       - file: rubymine-desktop-shortcut-add
-  {% endif %}
+    - onlyif: test "`uname`" = "Darwin"
 
 rubymine-desktop-shortcut-add:
-  {% if grains.os == 'MacOS' %}
   file.managed:
     - name: /tmp/mac_shortcut.sh
     - source: salt://rubymine/files/mac_shortcut.sh
@@ -21,24 +19,26 @@ rubymine-desktop-shortcut-add:
       user: {{ rubymine.prefs.user }}
       homes: {{ rubymine.homes }}
       edition: {{ rubymine.jetbrains.edition }}
+    - onlyif: test "`uname`" = "Darwin"
   cmd.run:
     - name: /tmp/mac_shortcut.sh {{ rubymine.jetbrains.edition }}
     - runas: {{ rubymine.prefs.user }}
     - require:
       - file: rubymine-desktop-shortcut-add
-   {% else %}
-   #Linux
+    - require_in:
+      - file: rubymine-desktop-shortcut-install
+    - onlyif: test "`uname`" = "Darwin"
+
+rubymine-desktop-shortcut-install
   file.managed:
     - source: salt://rubymine/files/rubymine.desktop
     - name: {{ rubymine.homes }}/{{ rubymine.prefs.user }}/Desktop/rubymine{{ rubymine.jetbrains.edition }}.desktop
-    - user: {{ rubymine.prefs.user }}
     - makedirs: True
-      {% if salt['grains.get']('os_family') in ('Suse',) %} 
-    - group: users
-      {% elif grains.os not in ('MacOS',) %}
-        #inherit Darwin group ownership
-    - group: {{ rubymine.prefs.user }}
-      {% endif %}
+    - user: {{ rubymine.prefs.user }}
+       {% if rubymine.prefs.group and grains.os not in ('MacOS',) %}
+    - group: {{ rubymine.prefs.group }}
+       {% endif %}
+    - makedirs: True
     - mode: 644
     - force: True
     - template: jinja
@@ -46,33 +46,26 @@ rubymine-desktop-shortcut-add:
     - context:
       home: {{ rubymine.jetbrains.realhome }}
       command: {{ rubymine.command }}
-   {% endif %}
 
 
   {% if rubymine.prefs.jarurl or rubymine.prefs.jardir %}
 
 rubymine-prefs-importfile:
-   {% if rubymine.prefs.jardir %}
   file.managed:
     - onlyif: test -f {{ rubymine.prefs.jardir }}/{{ rubymine.prefs.jarfile }}
     - name: {{ rubymine.homes }}/{{ rubymine.prefs.user }}/{{ rubymine.prefs.jarfile }}
     - source: {{ rubymine.prefs.jardir }}/{{ rubymine.prefs.jarfile }}
-    - user: {{ rubymine.prefs.user }}
     - makedirs: True
-        {% if grains.os_family in ('Suse',) %}
-    - group: users
-        {% elif grains.os not in ('MacOS',) %}
-        #inherit Darwin ownership
-    - group: {{ rubymine.prefs.user }}
-        {% endif %}
+    - user: {{ rubymine.prefs.user }}
+       {% if rubymine.prefs.group and grains.os not in ('MacOS',) %}
+    - group: {{ rubymine.prefs.group }}
+       {% endif %}
     - if_missing: {{ rubymine.homes }}/{{ rubymine.prefs.user }}/{{ rubymine.prefs.jarfile }}
-   {% else %}
   cmd.run:
+    - unless: test -f {{ rubymine.prefs.jardir }}/{{ rubymine.prefs.jarfile }}
     - name: curl -o {{rubymine.homes}}/{{rubymine.prefs.user}}/{{rubymine.prefs.jarfile}} {{rubymine.prefs.jarurl}}
     - runas: {{ rubymine.prefs.user }}
     - if_missing: {{ rubymine.homes }}/{{ rubymine.prefs.user }}/{{ rubymine.prefs.jarfile }}
-   {% endif %}
-
   {% endif %}
 
 {% endif %}
