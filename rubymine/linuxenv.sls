@@ -61,4 +61,17 @@ rubymine-alt-set:
       {% endif %}
   {% endif %}
 
+  {% if rubymine.linux.install_desktop_file %}
+rubymine-global-desktop-file:
+  file.managed:
+    - name: {{ rubymine.linux.desktop_file }}
+    - source: salt://rubymine/files/rubymine.desktop
+    - template: jinja
+    - context:
+      home: {{ rubymine.jetbrains.realhome }}
+      command: {{ rubymine.command }}
+      edition: {{ rubymine.jetbrains.edition }}
+    - onlyif: test -f {{ rubymine.jetbrains.realhome }}/{{ rubymine.command }}
+  {% endif %}
+
 {% endif %}
