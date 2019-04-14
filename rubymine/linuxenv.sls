@@ -31,6 +31,9 @@ rubymine-home-alt-install:
     - link: '{{ rubymine.jetbrains.home }}/rubymine'
     - path: '{{ rubymine.jetbrains.realhome }}'
     - priority: {{ rubymine.linux.altpriority }}
+    - retry:
+        attempts: 2
+        until: True
 
 rubymine-home-alt-set:
   alternatives.set:
@@ -38,6 +41,9 @@ rubymine-home-alt-set:
     - path: {{ rubymine.jetbrains.realhome }}
     - onchanges:
       - alternatives: rubymine-home-alt-install
+    - retry:
+        attempts: 2
+        until: True
 
 # Add intelli to alternatives system
 rubymine-alt-install:
@@ -49,6 +55,9 @@ rubymine-alt-install:
     - require:
       - alternatives: rubymine-home-alt-install
       - alternatives: rubymine-home-alt-set
+    - retry:
+        attempts: 2
+        until: True
 
 rubymine-alt-set:
   alternatives.set:
@@ -56,6 +65,9 @@ rubymine-alt-set:
     - path: {{ rubymine.jetbrains.realcmd }}
     - onchanges:
       - alternatives: rubymine-alt-install
+    - retry:
+        attempts: 2
+        until: True
 
   {% endif %}
 
