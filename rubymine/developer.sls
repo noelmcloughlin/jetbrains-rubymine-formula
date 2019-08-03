@@ -16,9 +16,9 @@ rubymine-desktop-shortcut-add:
     - mode: 755
     - template: jinja
     - context:
-      user: {{ rubymine.prefs.user }}
-      homes: {{ rubymine.homes }}
-      edition: {{ rubymine.jetbrains.edition }}
+      user: {{ rubymine.prefs.user|json }}
+      homes: {{ rubymine.homes|json }}
+      edition: {{ rubymine.jetbrains.edition|json }}
     - onlyif: test "`uname`" = "Darwin"
   cmd.run:
     - name: /tmp/mac_shortcut.sh {{ rubymine.jetbrains.edition }}
@@ -44,9 +44,8 @@ rubymine-desktop-shortcut-install
     - template: jinja
     - onlyif: test -f {{ rubymine.jetbrains.realcmd }}
     - context:
-      home: {{ rubymine.jetbrains.realhome }}
-      command: {{ rubymine.command }}
-
+      home: {{ rubymine.jetbrains.realhome|json }}
+      command: {{ rubymine.command|json }}
 
   {% if rubymine.prefs.jarurl or rubymine.prefs.jardir %}
 

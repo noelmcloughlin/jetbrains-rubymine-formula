@@ -19,7 +19,7 @@ rubymine-config:
     - user: root
     - group: root
     - context:
-      home: '{{ rubymine.jetbrains.home }}/rubymine'
+      home: '{{ rubymine.jetbrains.home|json }}/rubymine'
 
   # Linux alternatives
   {% if rubymine.linux.altpriority > 0 and grains.os_family not in ('Arch',) %}
@@ -78,9 +78,9 @@ rubymine-global-desktop-file:
     - source: salt://rubymine/files/rubymine.desktop
     - template: jinja
     - context:
-      home: {{ rubymine.jetbrains.realhome }}
-      command: {{ rubymine.command }}
-      edition: {{ rubymine.jetbrains.edition }}
+      home: {{ rubymine.jetbrains.realhome|json }}
+      command: {{ rubymine.command|json }}
+      edition: {{ rubymine.jetbrains.edition|json }}
     - onlyif: test -f {{ rubymine.jetbrains.realhome }}/{{ rubymine.command }}
   {% endif %}
 
