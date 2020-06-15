@@ -9,4 +9,4 @@ rubymine-package-archive-clean-file-absent:
   file.absent:
     - names:
       - {{ rubymine.pkg.archive.path }}
-      - /usr/local/jetbrains/rubymine-{{ rubymine.edition }}-*
+      - /usr/local/jetbrains/rubymine-*

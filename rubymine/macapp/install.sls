@@ -55,7 +55,7 @@ rubymine-macos-app-install-macpackage:
     - template: jinja
     - context:
       appname: {{ rubymine.pkg.name }}
-      edition: {{ rubymine.edition }}
+      edition: {{ '' if 'edition' not in rubymine else rubymine.edition }}
       user: {{ rubymine.identity.user }}
       homes: {{ rubymine.dir.homes }}
   cmd.run:

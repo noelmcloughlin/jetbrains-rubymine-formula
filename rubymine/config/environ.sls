@@ -28,7 +28,7 @@ rubymine-config-file-file-managed-environ_file:
     - template: jinja
     - context:
               {%- if rubymine.pkg.use_upstream_macapp %}
-        path: '/Applications/{{ rubymine.pkg.name }}{{ '\ %sE'|format(rubymine.edition) }}.app/Contents/MacOS'
+        path: '/Applications/{{ rubymine.pkg.name }}{{ '' if 'edition' not in rubymine else '\ %sE'|format(rubymine.edition) }}.app/Contents/MacOS'
               {%- else %}
         path: {{ rubymine.pkg.archive.path }}/bin
               {%- endif %}
