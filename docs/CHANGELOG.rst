@@ -2,6 +2,29 @@
 Changelog
 =========
 
+`1.0.1 <https://github.com/saltstack-formulas/jetbrains-rubymine-formula/compare/v1.0.0...v1.0.1>`_ (2020-06-15)
+--------------------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **edition:** better edition jinja code (\ `ff739a5 <https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/ff739a56ede34a150b443561dc9b0ed6eea7b81b>`_\ )
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **kitchen+travis:** add new platforms [skip ci] (\ `23c22e3 <https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/23c22e34fd24b658ff039bf49267943d7392f03d>`_\ )
+* **kitchen+travis:** adjust matrix to add ``3000.3`` [skip ci] (\ `41f92cd <https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/41f92cd1e751811ce700339f82ab58a5ce7e1d56>`_\ )
+* **travis:** add notifications => zulip [skip ci] (\ `fb19162 <https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/fb191620f024c8f5187e2355c8a3789eb2ff7e6d>`_\ )
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **readme:** improve formatting (\ `4967150 <https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/49671503f6581fb62c1caca04b2b56b6bcc06db8>`_\ )
+
 `1.0.0 <https://github.com/saltstack-formulas/jetbrains-rubymine-formula/compare/v0.1.2...v1.0.0>`_ (2020-05-12)
 --------------------------------------------------------------------------------------------------------------------
 
