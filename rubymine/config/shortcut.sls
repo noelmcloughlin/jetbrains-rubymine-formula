@@ -28,7 +28,7 @@ rubymine-config-file-file-managed-desktop-shortcut_file:
     - template: jinja
     - context:
         appname: {{ rubymine.pkg.name }}
-        edition: {{ rubymine.edition|json }}
+        edition: {{ '' if 'edition' not in rubymine else rubymine.edition|json }}
         command: {{ rubymine.command|json }}
               {%- if rubymine.pkg.use_upstream_macapp %}
         path: {{ rubymine.pkg.macapp.path }}

@@ -55,7 +55,7 @@ Available states
    :local:
 
 ``rubymine``
-^^^^^^^^^^
+^^^^^^^^^^^^
 
 *Meta-state (This is a state that includes other states)*.
 
@@ -64,28 +64,28 @@ manages Rubymine configuration file and then
 configures the development environment.
 
 ``rubymine.archive``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 This state will install Rubymine from archive only.
 
 ``rubymine.macapp``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 This state will install Rubymine from source only.
 
 ``rubymine.config``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 This state will configure npmrc and/or environment and has a dependency on ``rubymine.install``
 via include list.
 
 ``rubymine.linuxenv``
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 This state will install some Rubymine linux-alternatives on GNU/Linux.
 
 ``rubymine.clean``
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 *Meta-state (This is a state that includes other states)*.
 
@@ -94,25 +94,25 @@ removes the configuration file and
 then uninstalls the package.
 
 ``rubymine.config.clean``
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove the configuration of Rubymine and has a
 dependency on ``rubymine.package.clean`` via include list.
 
 ``rubymine.archive.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Rubymine package and has a dependency on
 ``rubymine.config.clean`` via include list.
 
 ``rubymine.macapp.clean``
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Rubymine package and has a dependency on
 ``rubymine.config.clean`` via include list.
 
 ``rubymine.linuxenv.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Rubymine linux-alternatives on GNU/Linux.
 
