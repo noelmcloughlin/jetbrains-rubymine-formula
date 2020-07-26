@@ -14,7 +14,7 @@ rubymine-macos-app-install-curl:
   pkg.installed:
     - name: curl
   cmd.run:
-    - name: curl -Lo {{ rubymine.dir.tmp }}/rubymine-{{ rubymine.version }} {{ rubymine.pkg.macapp.source }}
+    - name: curl -Lo {{ rubymine.dir.tmp }}/rubymine-{{ rubymine.version }} "{{ rubymine.pkg.macapp.source }}"
     - unless: test -f {{ rubymine.dir.tmp }}/rubymine-{{ rubymine.version }}
     - require:
       - file: rubymine-macos-app-install-curl
