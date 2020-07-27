@@ -11,21 +11,21 @@ rubymine-linuxenv-home-file-absent:
   file.absent:
     - names:
       - /opt/rubymine
-      - {{ rubymine.pkg.archive.path }}
+      - {{ rubymine.dir.path }}
 
         {% if rubymine.linux.altpriority|int > 0 and grains.os_family not in ('Arch',) %}
 
 rubymine-linuxenv-home-alternatives-clean:
   alternatives.remove:
     - name: rubyminehome
-    - path: {{ rubymine.pkg.archive.path }}
+    - path: {{ rubymine.dir.path }}
     - onlyif: update-alternatives --get-selections |grep ^rubyminehome
 
 
 rubymine-linuxenv-executable-alternatives-clean:
   alternatives.remove:
     - name: rubymine
-    - path: {{ rubymine.pkg.archive.path }}/rubymine
+    - path: {{ rubymine.dir.path }}/{{ rubymine.command }}
     - onlyif: update-alternatives --get-selections |grep ^rubymine
 
         {%- else %}

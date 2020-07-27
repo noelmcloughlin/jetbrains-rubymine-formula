@@ -6,11 +6,11 @@
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 {%- if rubymine.linux.install_desktop_file and grains.os not in ('MacOS',) %}
-       {%- if rubymine.pkg.use_upstream_macapp %}
-           {%- set sls_package_install = tplroot ~ '.macapp.install' %}
-       {%- else %}
-           {%- set sls_package_install = tplroot ~ '.archive.install' %}
-       {%- endif %}
+    {%- if rubymine.pkg.use_upstream_macapp %}
+        {%- set sls_package_install = tplroot ~ '.macapp.install' %}
+    {%- else %}
+        {%- set sls_package_install = tplroot ~ '.archive.install' %}
+    {%- endif %}
 
 include:
   - {{ sls_package_install }}
@@ -27,16 +27,15 @@ rubymine-config-file-file-managed-desktop-shortcut_file:
     - makedirs: True
     - template: jinja
     - context:
-        appname: {{ rubymine.pkg.name }}
-        edition: {{ '' if 'edition' not in rubymine else rubymine.edition|json }}
-        command: {{ rubymine.command|json }}
-              {%- if rubymine.pkg.use_upstream_macapp %}
-        path: {{ rubymine.pkg.macapp.path }}
-    - onlyif: test -f "{{ rubymine.pkg.macapp.path }}/{{ rubymine.command }}"
-              {%- else %}
-        path: {{ rubymine.pkg.archive.path }}
-    - onlyif: test -f {{ rubymine.pkg.archive.path }}/{{ rubymine.command }}
-              {%- endif %}
+      command: {{ rubymine.command|json }}
+                        {%- if grains.os == 'MacOS' %}
+      edition: {{ '' if 'edition' not in rubymine else rubymine.edition|json }}
+      appname: {{ rubymine.dir.path }}/{{ rubymine.pkg.name }}
+                        {%- else %}
+      edition: ''
+      appname: {{ rubymine.dir.path }}
+    - onlyif: test -f "{{ rubymine.dir.path }}/{{ rubymine.command }}"
+                        {%- endif %}
     - require:
       - sls: {{ sls_package_install }}
 

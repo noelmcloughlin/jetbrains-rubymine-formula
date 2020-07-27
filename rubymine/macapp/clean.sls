@@ -10,7 +10,11 @@ rubymine-macos-app-clean-files:
   file.absent:
     - names:
       - {{ rubymine.dir.tmp }}
-      - /Applications/{{ rubymine.pkg.name }}{{ '' if 'edition' not in rubymine else '\ %sE'|format(rubymine.edition) }}.app   # noqa 204
+                  {%- if grains.os == 'MacOS' %}
+      - {{ rubymine.dir.path }}/{{ rubymine.pkg.name }}*{{ rubymine.edition }}*.app
+                  {%- else %}
+      - {{ rubymine.dir.path }}
+                  {%- endif %}
 
     {%- else %}
 

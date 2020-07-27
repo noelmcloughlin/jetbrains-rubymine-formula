@@ -8,5 +8,9 @@
 rubymine-package-archive-clean-file-absent:
   file.absent:
     - names:
-      - {{ rubymine.pkg.archive.path }}
-      - /usr/local/jetbrains/rubymine-*
+      - {{ rubymine.dir.tmp }}
+                  {%- if grains.os == 'MacOS' %}
+      - {{ rubymine.dir.path }}/{{ rubymine.pkg.name }}*{{ rubymine.edition }}*.app
+                  {%- else %}
+      - {{ rubymine.dir.path }}
+                  {%- endif %}

@@ -11,7 +11,7 @@ rubymine-package-archive-install:
     - require_in:
       - file: rubymine-package-archive-install
   file.directory:
-    - name: {{ rubymine.pkg.archive.path }}
+    - name: {{ rubymine.dir.path }}
     - user: {{ rubymine.identity.rootuser }}
     - group: {{ rubymine.identity.rootgroup }}
     - mode: 755
@@ -39,7 +39,7 @@ rubymine-package-archive-install:
 rubymine-archive-install-file-symlink-rubymine:
   file.symlink:
     - name: /usr/local/bin/rubymine
-    - target: {{ rubymine.pkg.archive.path }}/{{ rubymine.command }}
+    - target: {{ rubymine.dir.path }}/{{ rubymine.command }}
     - force: True
     - onlyif: {{ grains.kernel|lower != 'windows' }}
     - require:
