@@ -14,8 +14,10 @@ rubymine-macos-app-install-curl:
   pkg.installed:
     - name: curl
   cmd.run:
-    - name: curl -Lo {{ rubymine.dir.tmp }}/rubymine-{{ rubymine.version }} {{ rubymine.pkg.macapp.source }}
-    - unless: test -f {{ rubymine.dir.tmp }}/rubymine-{{ rubymine.version }}
+    - name: curl -Lo {{ rubymine.dir.tmp }}/rubymine-{{ rubymine.version }} "{{ rubymine.pkg.macapp.source }}"
+    - unless:
+      - test -f {{ rubymine.dir.tmp }}/rubymine-{{ rubymine.version }}
+      - test -d {{ rubymine.dir.path }}/{{ rubymine.pkg.name }}{{ '' if not rubymine.edition else ' %sE'|format(rubymine.edition) }}  # noqa 204
     - require:
       - file: rubymine-macos-app-install-curl
       - pkg: rubymine-macos-app-install-curl
@@ -49,17 +51,21 @@ rubymine-macos-app-install-macpackage:
     - onchanges:
       - cmd: rubymine-macos-app-install-curl
   file.managed:
-    - name: /tmp/mac_shortcut.sh
-    - source: salt://rubymine/files/mac_shortcut.sh
+    - name: /tmp/mac_shortcut.sh.jinja
+    - source: salt://rubymine/files/mac_shortcut.sh.jinja
     - mode: 755
     - template: jinja
     - context:
-      appname: {{ rubymine.pkg.name }}
-      edition: {{ '' if 'edition' not in rubymine else rubymine.edition }}
+      appname: {{ rubymine.dir.path }}/{{ rubymine.pkg.name }}
+      edition: {{ '' if not rubymine.edition else ' %sE'|format(rubymine.edition) }}
       user: {{ rubymine.identity.user }}
       homes: {{ rubymine.dir.homes }}
+    - require:
+      - macpackage: rubymine-macos-app-install-macpackage
+    - onchanges:
+      - macpackage: rubymine-macos-app-install-macpackage
   cmd.run:
-    - name: /tmp/mac_shortcut.sh
+    - name: /tmp/mac_shortcut.sh.jinja
     - runas: {{ rubymine.identity.user }}
     - require:
       - file: rubymine-macos-app-install-macpackage

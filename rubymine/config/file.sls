@@ -28,12 +28,7 @@ rubymine-config-file-managed-config_file:
     - makedirs: True
     - template: jinja
     - context:
-              {%- if rubymine.pkg.use_upstream_macapp %}
-        path: {{ rubymine.pkg.macapp.path }}
-              {%- else %}
-        path: {{ rubymine.pkg.archive.path }}
-              {%- endif %}
-        config: {{ rubymine.config|json }}
+      config: {{ rubymine.config|json }}
     - require:
       - sls: {{ sls_package_install }}
 

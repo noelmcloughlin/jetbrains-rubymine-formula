@@ -27,11 +27,13 @@ rubymine-config-file-file-managed-environ_file:
     - makedirs: True
     - template: jinja
     - context:
-              {%- if rubymine.pkg.use_upstream_macapp %}
-        path: '/Applications/{{ rubymine.pkg.name }}{{ '' if 'edition' not in rubymine else '\ %sE'|format(rubymine.edition) }}.app/Contents/MacOS'
-              {%- else %}
-        path: {{ rubymine.pkg.archive.path }}/bin
-              {%- endif %}
-        environ: {{ rubymine.environ|json }}
+      environ: {{ rubymine.environ|json }}
+                      {%- if rubymine.pkg.use_upstream_macapp %}
+      edition:  {{ '' if not rubymine.edition else ' %sE'|format(rubymine.edition) }}.app/Contents/MacOS
+      appname: {{ rubymine.dir.path }}/{{ rubymine.pkg.name }}
+                      {%- else %}
+      edition: ''
+      appname: {{ rubymine.dir.path }}/bin
+                      {%- endif %}
     - require:
       - sls: {{ sls_package_install }}

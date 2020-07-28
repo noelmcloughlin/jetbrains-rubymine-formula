@@ -24,9 +24,9 @@ rubymine-config-clean-file-absent:
       - {{ rubymine.environ_file }}
                {%- endif %}
                {%- if grains.kernel|lower == 'linux' %}
-      - {{ rubymine.linux.desktop_file }}
+      - {{ rubymine.shortcut.file }}
                {%- elif grains.os == 'MacOS' %}
-      - {{ rubymine.dir.homes }}/{{ rubymine.identity.user }}/Desktop/{{ rubymine.pkg.name }}{{ '' if 'edition' not in rubymine else '\ %sE'|format(rubymine.edition) }}  # noqa 204
+      - {{ rubymine.dir.homes }}/{{ rubymine.identity.user }}/Desktop/{{ rubymine.pkg.name }}*{{ rubymine.edition }}*
                {%- endif %}
     - require:
       - sls: {{ sls_package_clean }}
