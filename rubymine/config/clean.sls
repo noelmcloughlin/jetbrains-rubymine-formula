@@ -24,7 +24,7 @@ rubymine-config-clean-file-absent:
       - {{ rubymine.environ_file }}
                {%- endif %}
                {%- if grains.kernel|lower == 'linux' %}
-      - {{ rubymine.linux.desktop_file }}
+      - {{ rubymine.shortcut.file }}
                {%- elif grains.os == 'MacOS' %}
       - {{ rubymine.dir.homes }}/{{ rubymine.identity.user }}/Desktop/{{ rubymine.pkg.name }}*{{ rubymine.edition }}*
                {%- endif %}

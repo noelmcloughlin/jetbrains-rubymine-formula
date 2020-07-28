@@ -6,18 +6,14 @@
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 {%- if rubymine.linux.install_desktop_file and grains.os not in ('MacOS',) %}
-    {%- if rubymine.pkg.use_upstream_macapp %}
-        {%- set sls_package_install = tplroot ~ '.macapp.install' %}
-    {%- else %}
-        {%- set sls_package_install = tplroot ~ '.archive.install' %}
-    {%- endif %}
+    {%- set sls_package_install = tplroot ~ '.archive.install' %}
 
 include:
   - {{ sls_package_install }}
 
 rubymine-config-file-file-managed-desktop-shortcut_file:
   file.managed:
-    - name: {{ rubymine.linux.desktop_file }}
+    - name: {{ rubymine.shortcut.file }}
     - source: {{ files_switch(['shortcut.desktop.jinja'],
                               lookup='rubymine-config-file-file-managed-desktop-shortcut_file'
                  )
