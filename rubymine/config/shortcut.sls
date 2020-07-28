@@ -5,7 +5,7 @@
 {%- from tplroot ~ "/map.jinja" import rubymine with context %}
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
-{%- if rubymine.linux.install_desktop_file and grains.os not in ('MacOS',) %}
+{%- if rubymine.shortcut.install and grains.kernel|lower == 'linux' %}
     {%- set sls_package_install = tplroot ~ '.archive.install' %}
 
 include:
