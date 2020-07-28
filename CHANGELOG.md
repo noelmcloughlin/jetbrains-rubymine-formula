@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.0.2](https://github.com/saltstack-formulas/jetbrains-rubymine-formula/compare/v1.0.1...v1.0.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* **cmd.run:** wrap url in quotes (zsh) ([1641a52](https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/1641a5291586c4d694facec61553a8aa37f57045))
+* **macos:** do not create shortcut file ([7d637e9](https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/7d637e93bd9dc4cb4ace917a41b1c556c8a0b0ac))
+* **macos:** do not create shortcut file ([33451f0](https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/33451f021b3895fd0f44fe7e5e12471acac771dc))
+
+
+### Code Refactoring
+
+* **jetbrains:** align all jetbrains formulas ([682e972](https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/682e97269fe3e288489751fb226168f26e15b119))
+
+
+### Continuous Integration
+
+* **kitchen:** use `saltimages` Docker Hub where available [skip ci] ([8c0405d](https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/8c0405d984979a653dc5fa85ccd559844f99ba37))
+
+
+### Documentation
+
+* **readme:** minor update ([8fc972b](https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/8fc972bb3a1a3147f82628ec1be93122cabbab33))
+
+
+### Styles
+
+* **libtofs.jinja:** use Black-inspired Jinja formatting [skip ci] ([94c8e84](https://github.com/saltstack-formulas/jetbrains-rubymine-formula/commit/94c8e844b0d176681cde05431422d4238f0d1d57))
+
 ## [1.0.1](https://github.com/saltstack-formulas/jetbrains-rubymine-formula/compare/v1.0.0...v1.0.1) (2020-06-15)
 
 
